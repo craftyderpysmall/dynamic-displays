@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>SmartMonitor</AssemblyName>
+    <RootNamespace>SmartMonitor.App</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
+    <StartupObject>SmartMonitor.App.Program</StartupObject>
+    <Version>1.0.0</Version>
+    <Product>Smart Monitor</Product>
+    <Description>Opens windows on the monitor where your cursor is.</Description>
+    <!-- WPF Fluent theme (ThemeMode) is marked experimental -->
+    <NoWarn>$(NoWarn);WPF0001;WFO0003</NoWarn>
+    <TieredPGO>true</TieredPGO>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Avoid WPF/WinForms type-name clashes; WinForms is only used for the tray icon. -->
+    <Using Remove="System.Windows.Forms" />
+    <Using Remove="System.Drawing" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Custom Main (Program.cs) handles the fast launch path before WPF starts. -->
+    <ApplicationDefinition Remove="App.xaml" />
+    <Page Include="App.xaml" />
+    <Resource Include="Assets\app.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SmartMonitor.Core\SmartMonitor.Core.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,61 @@
+<UserControl x:Class="SmartMonitor.App.Pages.TestPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Margin="36,28,36,36">
+        <TextBlock Text="Test" Style="{StaticResource PageTitle}" />
+        <TextBlock Style="{StaticResource PageSubtitle}" Text="Check which monitor Smart Monitor detects, and watch what it does as you use your PC." />
+
+        <Border Style="{StaticResource Card}">
+            <DockPanel>
+                <Button x:Name="DetectButton" DockPanel.Dock="Right" Content="Detect in 3 seconds" Style="{StaticResource AccentButton}"
+                        Click="Detect_Click" MinWidth="150" VerticalAlignment="Center" />
+                <StackPanel>
+                    <TextBlock Text="Which monitor am I on?" Style="{StaticResource Body}" FontWeight="SemiBold" />
+                    <TextBlock Style="{StaticResource Caption}" Margin="0,2,24,0"
+                               Text="Click, then move your mouse to any monitor. After 3 seconds the detected monitor lights up." />
+                    <TextBlock x:Name="DetectResult" Style="{StaticResource Body}" Margin="0,8,0,0" />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <Border Style="{StaticResource Card}">
+            <DockPanel>
+                <Button x:Name="MoveButton" DockPanel.Dock="Right" Content="Move in 3 seconds" Click="Move_Click" MinWidth="150" VerticalAlignment="Center" />
+                <StackPanel>
+                    <TextBlock Text="Move a window manually" Style="{StaticResource Body}" FontWeight="SemiBold" />
+                    <TextBlock Style="{StaticResource Caption}" Margin="0,2,24,0"
+                               Text="Click, then within 3 seconds click the window you want to move and move your mouse to the monitor you want it on. The window is moved there with the same logic the automatic mode uses (works even while Follow cursor is off)." />
+                    <TextBlock x:Name="MoveResult" Style="{StaticResource Body}" Margin="0,8,0,0" />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <Border Style="{StaticResource Card}">
+            <StackPanel>
+                <TextBlock Text="Last Smart-shortcut launch" Style="{StaticResource Body}" FontWeight="SemiBold" />
+                <TextBlock x:Name="LaunchContextText" Style="{StaticResource Caption}" Margin="0,4,0,0" />
+            </StackPanel>
+        </Border>
+
+        <DockPanel Margin="0,0,0,0">
+            <TextBlock Text="Live activity" Style="{StaticResource SectionHeader}" />
+            <CheckBox x:Name="ShowSkipped" Content="Show windows that were left alone" HorizontalAlignment="Right"
+                      VerticalAlignment="Bottom" Margin="0,0,0,8" Click="ShowSkipped_Click" />
+        </DockPanel>
+        <Border Style="{StaticResource Card}" Padding="8">
+            <ListView x:Name="DecisionList" MinHeight="200" MaxHeight="360" BorderThickness="0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Time" Width="80" DisplayMemberBinding="{Binding Time, StringFormat=HH:mm:ss}" />
+                        <GridViewColumn Header="Event" Width="110" DisplayMemberBinding="{Binding Trigger}" />
+                        <GridViewColumn Header="Result" Width="80" DisplayMemberBinding="{Binding Result}" />
+                        <GridViewColumn Header="Window" Width="260" DisplayMemberBinding="{Binding Window}" />
+                        <GridViewColumn Header="Details" Width="320" DisplayMemberBinding="{Binding Detail}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Border>
+        <TextBlock x:Name="EmptyHint" Style="{StaticResource Caption}" Margin="2,6,0,0"
+                   Text="Nothing yet — open, restore or switch to a window with your cursor on another monitor." />
+    </StackPanel>
+</UserControl>

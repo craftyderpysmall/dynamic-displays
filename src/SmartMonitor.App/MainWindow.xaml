@@ -1,0 +1,50 @@
+<Window x:Class="SmartMonitor.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Smart Monitor" Width="1000" Height="700" MinWidth="760" MinHeight="520"
+        WindowStartupLocation="CenterScreen" Icon="pack://application:,,,/Assets/app.ico">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="230" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Navigation -->
+        <DockPanel Grid.Column="0" Margin="10,14,6,12">
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="10,0,0,18">
+                <Image Source="pack://application:,,,/Assets/app.ico" Width="22" Height="22" />
+                <TextBlock Text="Smart Monitor" FontSize="15" FontWeight="SemiBold" Margin="10,0,0,0" VerticalAlignment="Center"
+                           Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+            </StackPanel>
+
+            <Border DockPanel.Dock="Bottom" Style="{StaticResource Card}" Margin="2,8,2,0" Padding="12,10">
+                <StackPanel>
+                    <DockPanel>
+                        <TextBlock Text="Follow cursor" FontWeight="SemiBold" VerticalAlignment="Center"
+                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+                        <CheckBox x:Name="EnabledToggle" Style="{StaticResource ToggleSwitch}" HorizontalAlignment="Right"
+                                  Checked="EnabledToggle_Click" Unchecked="EnabledToggle_Click" AutomationProperties.Name="Enable Smart Monitor" />
+                    </DockPanel>
+                    <TextBlock x:Name="StatusText" Style="{StaticResource Caption}" Margin="0,6,0,0" />
+                </StackPanel>
+            </Border>
+
+            <ListBox x:Name="Nav" BorderThickness="0" Background="Transparent" ItemContainerStyle="{StaticResource NavItem}"
+                     SelectionChanged="Nav_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBoxItem Tag="monitors"><StackPanel Orientation="Horizontal"><TextBlock FontFamily="{StaticResource IconFont}" Text="&#xE7F4;" FontSize="16" VerticalAlignment="Center" /><TextBlock Text="Monitors" Margin="14,0,0,0" VerticalAlignment="Center" /></StackPanel></ListBoxItem>
+                <ListBoxItem Tag="apps"><StackPanel Orientation="Horizontal"><TextBlock FontFamily="{StaticResource IconFont}" Text="&#xE71D;" FontSize="16" VerticalAlignment="Center" /><TextBlock Text="Apps" Margin="14,0,0,0" VerticalAlignment="Center" /></StackPanel></ListBoxItem>
+                <ListBoxItem Tag="settings"><StackPanel Orientation="Horizontal"><TextBlock FontFamily="{StaticResource IconFont}" Text="&#xE713;" FontSize="16" VerticalAlignment="Center" /><TextBlock Text="Behavior" Margin="14,0,0,0" VerticalAlignment="Center" /></StackPanel></ListBoxItem>
+                <ListBoxItem Tag="test"><StackPanel Orientation="Horizontal"><TextBlock FontFamily="{StaticResource IconFont}" Text="&#xE9D9;" FontSize="16" VerticalAlignment="Center" /><TextBlock Text="Test" Margin="14,0,0,0" VerticalAlignment="Center" /></StackPanel></ListBoxItem>
+                <ListBoxItem Tag="log"><StackPanel Orientation="Horizontal"><TextBlock FontFamily="{StaticResource IconFont}" Text="&#xE81C;" FontSize="16" VerticalAlignment="Center" /><TextBlock Text="Log" Margin="14,0,0,0" VerticalAlignment="Center" /></StackPanel></ListBoxItem>
+                <ListBoxItem Tag="about"><StackPanel Orientation="Horizontal"><TextBlock FontFamily="{StaticResource IconFont}" Text="&#xE946;" FontSize="16" VerticalAlignment="Center" /><TextBlock Text="Limitations" Margin="14,0,0,0" VerticalAlignment="Center" /></StackPanel></ListBoxItem>
+            </ListBox>
+        </DockPanel>
+
+        <!-- Content -->
+        <Border Grid.Column="1" CornerRadius="8,0,0,0" BorderThickness="1,1,0,0"
+                Background="{DynamicResource LayerFillColorDefaultBrush}"
+                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}">
+            <ContentControl x:Name="PageHost" Focusable="False" />
+        </Border>
+    </Grid>
+</Window>

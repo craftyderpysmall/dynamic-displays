@@ -1,0 +1,156 @@
+<UserControl x:Class="SmartMonitor.App.Pages.SettingsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Resources>
+        <Style x:Key="RowTitle" TargetType="TextBlock" BasedOn="{StaticResource Body}" />
+        <Style x:Key="RowText" TargetType="TextBlock" BasedOn="{StaticResource Caption}">
+            <Setter Property="Margin" Value="0,2,24,0" />
+        </Style>
+    </UserControl.Resources>
+    <StackPanel Margin="36,28,36,36">
+        <TextBlock Text="Behavior" Style="{StaticResource PageTitle}" />
+        <TextBlock Style="{StaticResource PageSubtitle}"
+                   Text="Choose which kinds of window events bring a window to the monitor your cursor is on. Changes apply immediately." />
+
+        <TextBlock Text="When a window should follow the cursor" Style="{StaticResource SectionHeader}" />
+        <Border Style="{StaticResource Card}">
+            <DockPanel>
+                <CheckBox DockPanel.Dock="Right" Style="{StaticResource ToggleSwitch}" IsChecked="{Binding FollowOnActivation}" Checked="Changed" Unchecked="Changed" />
+                <StackPanel>
+                    <TextBlock Text="Activated windows" Style="{StaticResource RowTitle}" />
+                    <TextBlock Style="{StaticResource RowText}" Text="A window that comes to the front without you clicking on it: opening a link (the browser jumps forward), clicking an app's taskbar button, an app bringing itself forward." />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+        <Border Style="{StaticResource Card}">
+            <DockPanel>
+                <CheckBox DockPanel.Dock="Right" Style="{StaticResource ToggleSwitch}" IsChecked="{Binding FollowOnKeyboardSwitch}" Checked="Changed" Unchecked="Changed" />
+                <StackPanel>
+                    <TextBlock Text="Alt+Tab and Win+Tab" Style="{StaticResource RowTitle}" />
+                    <TextBlock Style="{StaticResource RowText}" Text="Switching with the keyboard also brings the window to your cursor's monitor." />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+        <Border Style="{StaticResource Card}">
+            <DockPanel>
+                <CheckBox DockPanel.Dock="Right" Style="{StaticResource ToggleSwitch}" IsChecked="{Binding FollowOnRestore}" Checked="Changed" Unchecked="Changed" />
+                <StackPanel>
+                    <TextBlock Text="Restoring minimized windows" Style="{StaticResource RowTitle}" />
+                    <TextBlock Style="{StaticResource RowText}" Text="A minimized app reopens on the monitor your cursor is on, keeping its maximized/normal state." />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+        <Border Style="{StaticResource Card}">
+            <DockPanel>
+                <CheckBox DockPanel.Dock="Right" Style="{StaticResource ToggleSwitch}" IsChecked="{Binding FollowOnNewWindow}" Checked="Changed" Unchecked="Changed" />
+                <StackPanel>
+                    <TextBlock Text="New windows and app launches" Style="{StaticResource RowTitle}" />
+                    <TextBlock Style="{StaticResource RowText}" Text="Apps started from the taskbar, desktop, Start menu or anywhere else, plus new windows of running apps and apps reopening from the system tray." />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+        <Border Style="{StaticResource Card}">
+            <DockPanel>
+                <CheckBox DockPanel.Dock="Right" Style="{StaticResource ToggleSwitch}" IsChecked="{Binding PlaceBeforeShow}" Checked="Changed" Unchecked="Changed" />
+                <StackPanel>
+                    <TextBlock Text="Position new windows before they appear" Style="{StaticResource RowTitle}" />
+                    <TextBlock Style="{StaticResource RowText}" Text="Moves a new window in the moment between it being created and shown, so it appears on your monitor instead of appearing elsewhere and jumping. Apps that position themselves at the last moment are still moved right after they appear. Turn off if an app behaves oddly." />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+        <Border Style="{StaticResource Card}">
+            <DockPanel>
+                <CheckBox DockPanel.Dock="Right" Style="{StaticResource ToggleSwitch}" IsChecked="{Binding SkipFullscreen}" Checked="Changed" Unchecked="Changed" />
+                <StackPanel>
+                    <TextBlock Text="Leave full-screen windows alone" Style="{StaticResource RowTitle}" />
+                    <TextBlock Style="{StaticResource RowText}" Text="Games and full-screen video already running aren't moved when you switch to them." />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+        <Border Style="{StaticResource Card}">
+            <DockPanel>
+                <CheckBox DockPanel.Dock="Right" Style="{StaticResource ToggleSwitch}" IsChecked="{Binding MoveStartingGames}" Checked="Changed" Unchecked="Changed" />
+                <StackPanel>
+                    <TextBlock Text="Open games and splash screens on your monitor" Style="{StaticResource RowTitle}" />
+                    <TextBlock Style="{StaticResource RowText}" Text="While an app is starting (first 30 seconds), its loading/splash window and a borderless full-screen game window go to your cursor's monitor; the game is resized to fill it. Games in exclusive full screen pick their own monitor and can't be moved — set them to borderless (windowed full screen)." />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+        <TextBlock Style="{StaticResource Caption}" Margin="2,6,0,0"
+                   Text="Always left alone: dialogs that belong to another window (they stay with their app), windows you are dragging, windows under your cursor, and Windows' own shell UI (taskbar, Start, Alt+Tab)." />
+
+        <TextBlock Text="Timing" Style="{StaticResource SectionHeader}" />
+        <Border Style="{StaticResource Card}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="110" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition /><RowDefinition /><RowDefinition />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0">
+                    <TextBlock Text="New-window delay (ms)" Style="{StaticResource RowTitle}" />
+                    <TextBlock Style="{StaticResource RowText}" Text="Wait this long after a window appears before moving it. 0 (default) moves it immediately, which keeps the jump as short as possible; raise it if an app keeps moving itself back." />
+                </StackPanel>
+                <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewWindowDelayMs, UpdateSourceTrigger=LostFocus}" LostFocus="Changed" />
+                <StackPanel Grid.Row="1" Margin="0,12,0,0">
+                    <TextBlock Text="Re-check after (ms)" Style="{StaticResource RowTitle}" />
+                    <TextBlock Style="{StaticResource RowText}" Text="Some apps move themselves back to a saved position shortly after opening. Check once more after this delay (0 = off)." />
+                </StackPanel>
+                <TextBox Grid.Row="1" Grid.Column="1" Margin="0,12,0,0" VerticalAlignment="Center" Text="{Binding RecheckDelayMs, UpdateSourceTrigger=LostFocus}" LostFocus="Changed" />
+                <StackPanel Grid.Row="2" Margin="0,12,0,0">
+                    <TextBlock Text="Activation delay (ms)" Style="{StaticResource RowTitle}" />
+                    <TextBlock Style="{StaticResource RowText}" Text="Short pause before reacting to an activation, used to tell real activations apart from focus moving after a window closes." />
+                </StackPanel>
+                <TextBox Grid.Row="2" Grid.Column="1" Margin="0,12,0,0" VerticalAlignment="Center" Text="{Binding ActivationDelayMs, UpdateSourceTrigger=LostFocus}" LostFocus="Changed" />
+            </Grid>
+        </Border>
+
+        <TextBlock Text="Startup" Style="{StaticResource SectionHeader}" />
+        <Border Style="{StaticResource Card}">
+            <DockPanel>
+                <CheckBox x:Name="StartupToggle" DockPanel.Dock="Right" Style="{StaticResource ToggleSwitch}" Checked="StartupToggle_Click" Unchecked="StartupToggle_Click" />
+                <StackPanel>
+                    <TextBlock Text="Start with Windows" Style="{StaticResource RowTitle}" />
+                    <TextBlock Style="{StaticResource RowText}" Text="Starts in the notification area when you sign in." />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+        <Border Style="{StaticResource Card}">
+            <DockPanel>
+                <CheckBox x:Name="ElevatedToggle" DockPanel.Dock="Right" Style="{StaticResource ToggleSwitch}" Checked="ElevatedToggle_Click" Unchecked="ElevatedToggle_Click" />
+                <StackPanel>
+                    <TextBlock Text="Run elevated (manage admin windows too)" Style="{StaticResource RowTitle}" />
+                    <TextBlock Style="{StaticResource RowText}" Text="Windows blocks normal apps from moving windows of apps running as administrator. When on, Smart Monitor starts at sign-in through a Task Scheduler task with highest privileges (one UAC confirmation now, none at sign-in). Apps you launch from Smart Monitor are still started without admin rights." />
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <TextBlock x:Name="ElevationState" Style="{StaticResource Caption}" VerticalAlignment="Center" />
+                        <Button x:Name="RestartElevatedButton" Content="Restart elevated now" Margin="12,0,0,0" Click="RestartElevated_Click" />
+                    </StackPanel>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <TextBlock Text="Administrator (UAC) prompts" Style="{StaticResource SectionHeader}" />
+        <Border Style="{StaticResource Card}">
+            <StackPanel>
+                <TextBlock x:Name="UacState" Style="{StaticResource RowTitle}" />
+                <TextBlock Style="{StaticResource RowText}" Margin="0,6,0,0"
+                           Text="UAC prompts are drawn by Windows on a separate secure desktop that no app can draw on, move or copy. Smart Monitor cannot show them on a particular monitor or on both monitors." />
+                <TextBlock Style="{StaticResource RowText}" Margin="0,6,0,0"
+                           Text="With the secure desktop on (the default), every monitor is dimmed and blocked while the prompt is up. Turning off the Windows policy “User Account Control: Switch to the secure desktop when prompting for elevation” keeps your other monitor usable, but makes the prompt easier for malware to imitate or interfere with. Microsoft recommends leaving it on. Smart Monitor only shows this setting; it never changes it." />
+            </StackPanel>
+        </Border>
+
+        <TextBlock Text="Diagnostics" Style="{StaticResource SectionHeader}" />
+        <Border Style="{StaticResource Card}">
+            <DockPanel>
+                <CheckBox DockPanel.Dock="Right" Style="{StaticResource ToggleSwitch}" IsChecked="{Binding DebugLogging}" Checked="Changed" Unchecked="Changed" />
+                <StackPanel>
+                    <TextBlock Text="Detailed logging" Style="{StaticResource RowTitle}" />
+                    <TextBlock Style="{StaticResource RowText}" Text="Also log every window that was considered and why it was left alone." />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+    </StackPanel>
+</UserControl>
